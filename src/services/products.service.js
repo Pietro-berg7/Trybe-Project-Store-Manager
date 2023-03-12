@@ -3,18 +3,22 @@ const { idValidate, productValidate } = require('../validations/validation');
 
 const getAllProducts = async () => {
   const products = await productsModel.getAll();
-  return { type: 200, message: products };
+  return { type: null, message: products };
 };
 
-const getProductById = async (req) => {
-  const { id } = req.params;
-  const idValidation = idValidate(id);
-  if (idValidation.type) {
-    return { status: 400, response: { message: idValidation.message } };
+const getProductById = async (id) => {
+  const error = idValidate(id);
+  if (error.type) {
+    return error;
   }
-  const products = await productsModel.getById(id);
-  if (!products) return { status: 404, response: { message: 'Product not found' } };
-  return { type: 200, message: products };
+
+  const product = await productsModel.getById(id);
+
+  if (product) {
+    return { type: null, message: product };
+  }
+
+  return { type: 404, message: 'Product not found' };
 };
 
 const createProduct = async (product) => {

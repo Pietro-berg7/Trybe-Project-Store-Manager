@@ -17,13 +17,13 @@ const getProductById = async (req) => {
   return { type: 200, message: products };
 };
 
-const createProduct = async (productData) => {
-  const productValidationError = productValidate(productData);
-  if (productValidationError.type) {
-    return productValidationError;
+const createProduct = async (product) => {
+  const error = productValidate(product);
+  if (error.type) {
+    return error;
   }
-  const insertedProductId = await productsModel.createProduct(productData);
-  const insertedProduct = await productsModel.getProductById(insertedProductId);
+  const insertedProductId = await productsModel.postProduct(product);
+  const insertedProduct = await productsModel.getById(insertedProductId);
   return { type: null, message: insertedProduct };
 };
 

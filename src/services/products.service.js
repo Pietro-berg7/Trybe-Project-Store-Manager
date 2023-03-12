@@ -1,5 +1,5 @@
 const { productsModel } = require('../models');
-const { validation } = require('../validations/validation');
+const { idValidate, productValidate } = require('../validations/validation');
 
 const getAllProducts = async () => {
   const products = await productsModel.getAll();
@@ -8,7 +8,7 @@ const getAllProducts = async () => {
 
 const getProductById = async (req) => {
   const { id } = req.params;
-  const idValidation = validation(id);
+  const idValidation = idValidate(id);
   if (idValidation.type) {
     return { status: 400, response: { message: idValidation.message } };
   }
@@ -17,7 +17,18 @@ const getProductById = async (req) => {
   return { type: 200, message: products };
 };
 
+const createProduct = async (productData) => {
+  const productValidationError = productValidate(productData);
+  if (productValidationError.type) {
+    return productValidationError;
+  }
+  const insertedProductId = await productsModel.createProduct(productData);
+  const insertedProduct = await productsModel.getProductById(insertedProductId);
+  return { type: null, message: insertedProduct };
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
+  createProduct,
 };

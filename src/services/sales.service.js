@@ -2,6 +2,7 @@ const { salesModel } = require('../models');
 const {
   validateQuantities,
   validateProductIds,
+  validateSalesData,
 } = require('../validations/sales.validation');
 
 const createSales = async (products) => {
@@ -24,6 +25,21 @@ const createSales = async (products) => {
   return { type: null, message: result };
 };
 
+const allSales = async () => {
+  const sales = await salesModel.getSalesData();
+  return { type: null, message: sales };
+};
+
+const getSaleById = async (id) => {
+  const saleDetails = await salesModel.getSaleDetailsById(id);
+  const { type, message } = validateSalesData(saleDetails);
+  return type
+    ? { type, message }
+    : { type: 200, message: saleDetails };
+};
+
 module.exports = {
   createSales,
+  allSales,
+  getSaleById,
 };

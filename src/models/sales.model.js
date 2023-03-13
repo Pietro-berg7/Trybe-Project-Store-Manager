@@ -1,3 +1,4 @@
+// const camelize = require('camelize');
 const conn = require('./conn');
 
 const createSale = async () => {
@@ -16,7 +17,39 @@ const addProductToSale = async (saleId, { productId, quantity }) => {
   );
 };
 
+const getSalesData = async () => {
+  const [request] = await conn.execute(
+    `SELECT
+      (products.sale_id) AS saleId,
+      (sales.date) AS date,
+      (products.product_id) AS productId,
+      (products.quantity) AS quantity
+    FROM 
+      StoreManager.sales_products AS products
+    JOIN StoreManager.sales AS sales ON sales.id = products.sale_id
+    ORDER BY products.sale_id ASC, products.product_id ASC;`,
+  );
+
+  return request;
+};
+
+const getSaleDetailsById = async (id) => {
+  const [request] = await conn.execute(
+    `SELECT
+      (sales.date) AS date,
+      (products.product_id) AS productId,
+      (products.quantity) AS quantity
+    FROM StoreManager.sales_products AS products
+    JOIN StoreManager.sales AS sales ON sales.id = products.sale_id
+    WHERE products.sale_id = ?`,
+    [id],
+  );
+  return request;
+};
+
 module.exports = {
   createSale,
   addProductToSale,
+  getSalesData,
+  getSaleDetailsById,
 };

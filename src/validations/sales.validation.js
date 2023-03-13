@@ -34,8 +34,15 @@ const validateSales = async (salesData) => {
   return validationResults;
 };
 
+const validateSalesData = (data) => (
+  data.length === 0
+    ? { type: 404, message: 'Sale not found' }
+    : { type: null, message: 'OK' }
+);
+
 module.exports = {
   validateQuantities,
   validateProductIds,
   validateSales,
+  validateSalesData,
 };

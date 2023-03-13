@@ -23,8 +23,20 @@ const postProduct = async (product) => {
   return insertId;
 };
 
+const updateProducts = async (name, id) => {
+  const updateQuery = 'UPDATE StoreManager.products SET name = ? WHERE id = ?;';
+  const selectQuery = 'SELECT * FROM StoreManager.products WHERE id = ?;';
+
+  await conn.execute(updateQuery, [name, id]);
+
+  const [rows] = await conn.execute(selectQuery, [id]);
+
+  return rows.length ? rows[0] : null;
+};
+
 module.exports = {
   getAll,
   getById,
   postProduct,
+  updateProducts,
 };

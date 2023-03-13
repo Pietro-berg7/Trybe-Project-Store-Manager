@@ -1,4 +1,3 @@
-// const camelize = require('camelize');
 const conn = require('./conn');
 
 const createSale = async () => {

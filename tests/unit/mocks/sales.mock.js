@@ -1,46 +1,40 @@
-const allSales = [
+const mockArrSales = [
+  {
+    productId: 1,
+    quantity: 1,
+  },
+  {
+    productId: 2,
+    quantity: 5,
+  },
+  {
+    productId: 3,
+    quantity: 5,
+  },
+];
+
+const mockArrAllSales = [
   {
     saleId: 1,
-    date: "2023-02-15T16:19:33.000Z",
+    date: "2022-10-13T21:45:29.000Z",
     productId: 1,
     quantity: 5,
   },
   {
     saleId: 1,
-    date: "2023-02-15T16:19:33.000Z",
+    date: "2022-10-13T21:45:29.000Z",
     productId: 2,
     quantity: 10,
   },
   {
     saleId: 2,
-    date: "2023-02-15T16:19:33.000Z",
+    date: "2022-10-13T21:45:29.000Z",
     productId: 3,
     quantity: 15,
   },
 ];
-const createSale = {
-  id: 3,
-  itemsSold: [
-    {
-      productId: 1,
-      quantity: 1,
-    },
-    {
-      productId: 2,
-      quantity: 3,
-    },
-  ],
+
+module.exports = {
+  mockArrSales,
+  mockArrAllSales,
 };
-const saleById = [
-  {
-    date: "2023-02-27T19:24:22.000Z",
-    productId: 1,
-    quantity: 5,
-  },
-  {
-    date: "2023-02-27T19:24:22.000Z",
-    productId: 2,
-    quantity: 10,
-  },
-];
-module.exports = { allSales, createSale, saleById };

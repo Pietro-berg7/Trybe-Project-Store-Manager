@@ -46,9 +46,18 @@ const getSaleDetailsById = async (id) => {
   return request;
 };
 
+const deleteById = async (id) => {
+  const [request] = await conn.execute(
+    'DELETE FROM StoreManager.sales WHERE id = ?',
+    [id],
+  );
+  return request;
+};
+
 module.exports = {
   createSale,
   addProductToSale,
   getSalesData,
   getSaleDetailsById,
+  deleteById,
 };

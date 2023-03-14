@@ -49,10 +49,15 @@ const deleteProduct = async (id) => {
     : { type: 404, message: 'Product not found' };
 };
 
+const getBySearch = async (search) => ({
+  message: await productsModel.getBySearch(search),
+});
+
 module.exports = {
   getAllProducts,
   getProductById,
   createProduct,
   updateProduct,
   deleteProduct,
+  getBySearch,
 };

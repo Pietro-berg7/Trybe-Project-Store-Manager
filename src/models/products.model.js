@@ -42,10 +42,19 @@ const deleteById = async (id) => {
   return deleteResult;
 };
 
+const getBySearch = async (searh) => {
+  const [searchResult] = await conn.execute(
+    'SELECT * FROM StoreManager.products WHERE name LIKE ?',
+    [`%${searh}%`],
+  );
+  return searchResult;
+};
+
 module.exports = {
   getAll,
   getById,
   postProduct,
   updateProducts,
   deleteById,
+  getBySearch,
 };

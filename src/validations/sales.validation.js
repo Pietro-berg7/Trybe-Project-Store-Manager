@@ -20,18 +20,22 @@ const validateProductIds = async (products) => {
 };
 
 const validateSales = async (salesData) => {
-  const validationResults = await Promise.all(
-    salesData.map(({ productId, quantity }) => {
-      if (productId === undefined) {
-        return 'Invalid Product ID';
-      }
-      if (quantity === undefined) {
-        return 'Invalid quantity';
-      }
-      return 'OK';
-    }),
-  );
-  return validationResults;
+  try {
+    const validationResults = await Promise.all(
+      salesData.map(({ productId, quantity }) => {
+        if (productId === undefined) {
+          return 'Invalid Product ID';
+        }
+        if (quantity === undefined) {
+          return 'Invalid quantity';
+        }
+        return 'OK';
+      }),
+    );
+    return validationResults;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const validateSalesData = (data) => (

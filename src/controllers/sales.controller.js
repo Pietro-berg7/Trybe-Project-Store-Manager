@@ -4,6 +4,8 @@ const { validateSales } = require('../validations/sales.validation');
 const createSales = async (req, res) => {
   const salesData = req.body;
   const salesValidationResult = await validateSales(salesData);
+  const error = !Array.isArray(salesValidationResult);
+  if (error) return console.log(error);
 
   if (salesValidationResult.every((status) => status === 'OK')) {
     const { type, message } = await salesService.createSales(salesData);
@@ -37,7 +39,7 @@ const deleteSaleData = async (req, res) => {
   const { type, message } = await salesService.deleteSaleData(id);
   return type === null
     ? res.status(404).json({ message })
-    : res.status(204).send(message);
+    : res.status(204).json(message);
 };
 
 module.exports = {
